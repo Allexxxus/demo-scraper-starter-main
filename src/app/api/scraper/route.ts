@@ -3,7 +3,10 @@ import puppeteer from "puppeteer-core";
 
 chromium.setGraphicsMode = false;
 
-export async function POST() {
+export async function POST(request: { json: () => PromiseLike<{ url: any; }> | { url: any; }; }) {
+
+  const {url} = await request.json()
+
   await chromium.font(
     "https://raw.githack.com/googlei18n/noto-emoji/master/fonts/NotoColorEmoji.ttf"
   );
@@ -18,12 +21,11 @@ export async function POST() {
   });
 
   const page = await browser.newPage();
-  await page.goto("https://spacejelly.dev");
+  await page.goto(url);
   const pageTitle = await page.title();
   await browser.close();
 
   return Response.json({
-    // hello: "world",
     pageTitle
   });
 }
