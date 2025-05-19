@@ -3,7 +3,7 @@ import puppeteer from "puppeteer-core";
 
 chromium.setGraphicsMode = false;
 
-export async function POST(request: { json: () => PromiseLike<{ url: string; }> | { url: string; }; }) {
+export async function POST(request: Request) {
 
   const {url} = await request.json()
 
